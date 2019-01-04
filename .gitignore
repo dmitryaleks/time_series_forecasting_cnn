@@ -1,0 +1,5 @@
+# Do not include exchange access keys
+/cfg/accessKey*
+
+*.pyc
+__pycache__

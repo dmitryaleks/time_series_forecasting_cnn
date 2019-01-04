@@ -73,7 +73,7 @@ def make_timeseries_instances(timeseries, window_size):
     return X, y, q
 
 
-def evaluate_timeseries(timeseries, window_size):
+def evaluate_timeseries(timeseries, window_size, show_plot=False):
     """Create a 1D CNN regressor to predict the next value in a `timeseries` using the preceding `window_size` elements
     as input features and evaluate its performance.
     :param ndarray timeseries: Timeseries data with time increasing down the rows (the leading dimension/axis).
@@ -101,15 +101,18 @@ def evaluate_timeseries(timeseries, window_size):
     print('\n\nactual', 'predicted', sep='\t')
     for actual, predicted in zip(y_test, pred.squeeze()):
         print(actual.squeeze(), predicted, sep='\t')
-    print('next', model.predict(q).squeeze(), sep='\t')
+    next = model.predict(q).squeeze()
+    print('next', next, sep='\t')
 
-    # Plot graph: predicted VS actual
-    #plt.subplot(111)
-    plt.plot(pred.squeeze(), label='Predicted', marker='o')
-    plt.plot(y_test, label='Actual', marker='o')
-    # plt.ylim(ymin=0)
-    plt.legend()
-    plt.show()
+    if (show_plot):
+        # Plot graph: predicted VS actual
+        plt.plot(pred.squeeze(), label='Predicted', marker='o')
+        plt.plot(y_test, label='Actual', marker='o')
+        # plt.ylim(ymin=0)
+        plt.legend()
+        plt.show()
+
+    return next
 
 
 def main():
@@ -123,7 +126,7 @@ def main():
     series = pd.read_csv(filename, sep=',', header=0, index_col=0, squeeze=True)
     timeseries = series.values
 
-    evaluate_timeseries(timeseries, window_size)
+    evaluate_timeseries(timeseries, window_size, show_plot=True)
 
 
 if __name__ == '__main__':
