@@ -13,4 +13,4 @@ class TestForecast(unittest.TestCase):
         timeseries = np.arange(1000)
         prediction = evaluate_timeseries(timeseries, 20)
         print(prediction)
-        self.assertTrue(self.is_close_enough(prediction, 1000, 10.0))
+        self.assertTrue(self.is_close_enough(prediction, 1000, 20.0))
